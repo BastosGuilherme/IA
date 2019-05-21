@@ -1,0 +1,34 @@
+
+# CÓDIGO TENSORFLOW - GUILHERME 
+# FUNCAO DEVIATION E GradientDescentOptimizer
+# --------------------------------------
+import tensorflow as tf
+
+# DEFININDO VARIAVEIS: 
+# VARIAVEIS X E Y = CONSTANTE 
+# VARIAVEL Z = DESCONHECIDA (VALOR IDENTIFICADO AO DECORRER DO CÓDIGO)
+
+x = tf.constant([[1., 2.]])
+y = tf.constant([[12., 4.]])
+
+Z = tf.Variable(tf.zeros([1, 2]))
+
+#UTILIZANDO DEVIATION PARA IDENTIFICAR O VALOR DA VARIAVEL
+
+yy = tf.add(x, Z)
+deviation = tf.square(y - yy)
+
+#ENCONTRAMOS O TRAIN_STEP COM O OTIMIZADOR GradientDescentOptimizer (que é simplesmente a aplicação direta do algoritmo backpropagation)
+
+train_step = tf.train.GradientDescentOptimizer(0.01).minimize(deviation)
+
+#INICIANDO SESSAO TF E EXECUTANDO
+
+init = tf.global_variables_initializer()
+sess = tf.Session();
+sess.run(init)
+for i in range(5000):
+ sess.run(train_step)
+print(sess.run(Z))
+
+#https://medium.com/@liccowee/tensorflow-to-solve-simple-math-equation-27f42a44f0f1
